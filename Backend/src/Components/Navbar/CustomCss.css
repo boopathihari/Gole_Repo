@@ -1,0 +1,25 @@
+.custom-nav .flex{
+    justify-content: space-around;
+}
+
+.customBtn ul{
+    gap: 18px;
+}
+
+.customChat{
+    justify-content: center !important;
+}
+
+.Customcard>.flex.h-full.flex-col{
+    width: 100%;
+}
+
+.Customcard>.flex.h-full{
+    padding: 10px;
+    gap: 6px;
+}
+
+.Customcard > img{
+    width: 250px;
+    height: 250px;
+}
