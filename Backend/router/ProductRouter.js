@@ -1,36 +1,37 @@
 const express = require('express');
 const router = express.Router();
-const app = express();
-const productModel = require('../models/ProductModel');
+const Item = require('../models/ProductModel');
 const multer = require('multer');
+const path = require('path');
 
+// Multer configuration for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    const extname = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + Date.now() + extname);
+  },
+});
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
+// Create a new item with image upload
+router.post('/', upload.single('image'), async (req, res) => {
+  try {
+    const { name, amount, description } = req.body;
+    const imageUrl = req.file.filename; // Store the file name in the database
 
-router.get('/',async(req,res)=>{
-    res.send('Get Request');
-})
+    const newItem = new Item({ name, amount, description, image: imageUrl });
+    const savedItem = await newItem.save();
 
+    res.json(savedItem);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-router.post('/', upload.single('image'), async(req,res)=>{
-    try {
-        const { name, description, price } = req.body;
-        const image = {
-            data: req.file.buffer,
-            contentType: req.file.mimetype
-        };
-
-        const product = new productModel({ name, description, price, image });
-        await product.save();
-
-        res.status(201).json(product);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'An error occurred while creating the product.' });
-    }
-})
-
+// ... Add more routes for retrieving, updating, and deleting items as needed.
 
 module.exports = router;
