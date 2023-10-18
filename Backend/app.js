@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const { castObject } = require("./models/ProductModel");
 const sharp = require('sharp');
 const fs=require('fs');
+const cors = require('cors');
+
+app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,39 +38,73 @@ database();
 
 
 // Adding Product API
-app.post('/addProduct', upload.single('image'), (req, res) => {
-    const { name, price,description } = req.body;
-    console.log(price);
-   const image = {
-            data: req.file.buffer,
-            contentType: req.file.mimetype
+app.post('/addProduct', upload.single('image'), async (req, res) => {
+    try {
+        const { name, amount, description } = req.body;
+        const image = {
+          data: req.file.buffer,
+          contentType: req.file.mimetype,
         };
-    res.json({
-      name,
-      price,
-      description,
-      image
-    });
-
-    Product.create({
-        name:name,
-        amount:price,
-        description:description,
-        image:image
-    })
-
-
+    
+        const product = new Product({
+          name,
+          amount,
+          description,
+          image,
+        });
+    
+        await product.save();
+        res.status(201).json(product);
+      } catch (error) {
+        res.status(500).json({ error: 'Error adding a product' });
+      }
+    
   });
 
   
   app.get('/getProduct',async (req,res)=>
   {
-    
+    try {
+
+        const products = await Product.find();
+
+    // Map the products to include product details and image sources
+    const productsWithDetails = products.map(product => {
+      const { id , name, amount, description, image } = product;
+      let imageSrc = null;
+
+      if (image && image.data) {
+        // Create a Base64-encoded image URL
+        const base64Image = image.data.toString('base64');
+        imageSrc = `data:${image.contentType};base64,${base64Image}`;
+      }
+
+      return { id, name, amount, description, image: imageSrc };
+    });
+
+    res.json(productsWithDetails);
+      } catch (error) {
+        res.status(500).json({ error: 'Error getting product information' });
+      }
   });
 
 
- 
-  
+
+app.get('/products/:productId' , async(req,res)=>{
+    try {
+        const productId = req.params.productId;
+        const product = await Product.findById(productId);
+    
+        if (!product) {
+          return res.status(404).json({ error: 'Product not found' });
+        }
+    
+        res.json(product);
+      } catch (error) {
+        res.status(500).json({ error: 'Error getting the specific product' });
+      }
+    
+});
 
 
 

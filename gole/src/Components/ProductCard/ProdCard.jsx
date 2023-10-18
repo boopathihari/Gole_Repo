@@ -3,21 +3,23 @@ import { Card } from "flowbite-react";
 import ProdImg from "./fan.jpg";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { AiOutlineHeart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 
 
-export default function ProdCard() {
+export default function ProdCard({productId,ProName,proAmount,imgsrc}) {
+  
   return (
-    <Card imgAlt="" imgSrc={ProdImg}   className="Customcard items-center w-[23%] p-2 max-sm:flex-col max-lg:w-[32%] max-sm:w-[100%]">
+    <Card imgAlt="" imgSrc={imgsrc}   className="Customcard items-center w-[23%] p-2 max-sm:flex-col max-lg:w-[32%] max-sm:w-[100%]">
       <a href="#">
       <div className="mb-2 flex items-center">
         <span className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-          <FaIndianRupeeSign /> 1000
+          <FaIndianRupeeSign /> {proAmount}
         </span>
       </div>
 
         <h5 className="text-xl mb-2 font-semibold tracking-tight text-gray-900 dark:text-white">
-          <p>Table Fan</p>
+          <p>{ProName}</p>
         </h5>
       </a>
       
@@ -34,7 +36,9 @@ export default function ProdCard() {
           className="rounded-lg text-[12px] bg-[#1c7ed6] px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-[#1864ab] focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800 w-[100%] "
           href="#"
         >
+          <Link to={`/Product/${productId}`}>
           <p className="text-[14px]">Know More</p>
+          </Link>
         </a>
       </div>
     </Card>

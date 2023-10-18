@@ -7,6 +7,7 @@ import SearchInput from "../SearchInput/SearchInput";
 import { HiOutlineChatBubbleOvalLeft } from "react-icons/hi2";
 import { Button } from "flowbite-react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   return (
@@ -47,13 +48,15 @@ export default function NavBar() {
         </Dropdown>
         <Navbar.Toggle />
         
+        <Link to='/sellProduct'>
         <Button
           gradientDuoTone="purpleToBlue"
           className="font-bold max-sm:hidden"
         >
           <AiOutlinePlus className="w-[1.5rem] h-[1.5rem]" /> &nbsp; SELL
         </Button>
-        
+        </Link>
+         
       </div>
 
       <Navbar.Collapse className="customBtn">
