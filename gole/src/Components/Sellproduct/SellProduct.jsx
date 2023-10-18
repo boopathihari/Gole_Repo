@@ -3,6 +3,7 @@ import './Sell.css';
 
 export default function SellProduct() {
   const [image, setImage] = useState(null);
+  const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -19,6 +20,10 @@ export default function SellProduct() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+  };
+  
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
   const handleAmountChange = (e) => {
@@ -66,13 +71,24 @@ export default function SellProduct() {
               )}
             </div>
             <div>
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={handleNameChange}
+                placeholder="Enter name of the product"
+                required
+              />
+            </div>
+            <div>
               <label htmlFor="amount">Enter Amount:</label>
               <input
                 type="number"
                 id="amount"
                 value={amount}
                 onChange={handleAmountChange}
-                placeholder="Enter amount..."
+                placeholder="Enter amount"
                 required
               />
             </div>
@@ -82,7 +98,7 @@ export default function SellProduct() {
                 id="description"
                 value={description}
                 onChange={handleDescriptionChange}
-                placeholder="Enter product description..."
+                placeholder="Enter product description"
                 required
               />
             </div>
