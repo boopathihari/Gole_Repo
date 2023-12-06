@@ -24,12 +24,15 @@ const Product=require('./models/ProductModel');
 const uri = "mongodb+srv://boopathihari2003:q4BgYMAsFSt78z4U@cluster0.3tso1lz.mongodb.net/?retryWrites=true&w=majority";
 
 const database = module.exports = () => {
+  
     const connectionParams = {
-        useNewUrlParser:true 
+      useNewUrlParser:true,
+      useUnifiedTopology: true,
     }
     try{
-        mongoose.connect(uri);
-        console.log('Database connected successfully');
+      mongoose.connect(uri);
+      console.log('Database connected successfully');
+      connectionParams 
     }catch(error){
         console.log('Not connected');
     }
@@ -87,6 +90,39 @@ app.post('/addProduct', upload.single('image'), async (req, res) => {
         res.status(500).json({ error: 'Error getting product information' });
       }
   });
+
+
+  
+app.get('/products/search', async(req, res) => {
+  const searchQuery = req.query.name;
+
+    if (!searchQuery) {
+      return res.status(400).json({ error: 'Name parameter is required' });
+    }
+  
+    // Assuming you have a data source or model named 'Product'
+    const results = await Product.find({ name: { $regex: new RegExp(searchQuery, 'i') } }).lean();
+  
+     // Map the products to include product details and image sources
+      const productsWithDetails = results.map(product => {
+      const { id , name, amount, description, image } = product;
+      let imageSrc = null;
+
+      if (image && image.data) {
+        // Create a Base64-encoded image URL
+        const base64Image = image.data.toString('base64');
+        imageSrc = `data:${image.contentType};base64,${base64Image}`;
+      }
+
+      return { id, name, amount, description, image: imageSrc };
+    });
+
+    res.json(productsWithDetails);
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No products found matching the search query' });
+    }
+});
 
 
 

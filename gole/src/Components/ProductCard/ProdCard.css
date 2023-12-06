@@ -1,0 +1,7 @@
+.Customcard>img{
+    width: 70% !important;
+}
+
+.Customcard>.flex.h-full.flex-col.justify-center{
+    justify-content: end !important;
+}

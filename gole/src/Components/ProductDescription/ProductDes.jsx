@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import Carousel from "../CarouselComp";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { AiOutlineShareAlt } from "react-icons/ai";
@@ -9,10 +9,25 @@ import { IoIosArrowDropright } from "react-icons/io";
 import { BsTelephone } from "react-icons/bs";
 import '../ProductDescription/ProductDes.css';
 import gmap from './gmap.png';
+import { useParams } from 'react-router-dom';
 
 import { Button, Card } from "flowbite-react";
 
 export default function ProductDes() {
+  const { productID } = useParams();
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    // Make an API request to fetch product details based on productId
+    // You can use a library like axios or fetch
+
+    // Example API request using fetch
+    fetch(`/products/${productID}`) // Replace with your API endpoint
+      .then((response) => response.json())
+      .then((data) => setProduct(data))
+      .catch((error) => console.error(error));
+  }, [productID]);
+
   return (
     <div>
       <div>
@@ -26,13 +41,24 @@ export default function ProductDes() {
             </h5>
             <p className="font-normal text-gray-700 dark:text-gray-400">
               <p>
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order. Here are the biggest
-                enterprise technology acquisitions of 2021 so far, in reverse
-                chronological order. Here are the biggest enterprise technology
-                acquisitions of 2021 so far, in reverse chronological order.
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order.
+              Casio is a well-known manufacturer of a wide range of calculators, including calculators designed for various purposes, such as basic arithmetic, scientific calculations, financial calculations, and more. It's important to note that there is a wide variety of Casio calculators with different features and capabilities, so I'll provide a general description of a Casio calculator suitable for basic arithmetic calculations that can be operated with two hands.
+
+                Casio Basic Calculator for 2-Hand Use:
+
+                Design: Casio basic calculators are typically compact and lightweight, designed for easy portability and handheld use. They usually have a durable plastic casing.
+
+                Display: These calculators often feature a liquid crystal display (LCD) that can show both numbers and basic mathematical symbols. The display is typically large and clear for easy readability.
+
+                Keypad: The keypad of a Casio basic calculator is designed for ease of use. It includes numeric keys (0-9), basic arithmetic operators (addition, subtraction, multiplication, division), and other function keys. Some models may also have additional keys for memory storage, percentage calculations, and square root.
+
+                Dual-Powered: Many Casio calculators are dual-powered, meaning they can be operated using both solar cells and a built-in battery. This ensures that the calculator remains functional even in low light conditions.
+
+                Functionality: Casio basic calculators are designed for everyday arithmetic calculations, making them ideal for students, professionals, and anyone who needs to perform basic math operations. They can handle addition, subtraction, multiplication, and division, and they often have basic memory functions.
+
+                Two-Hand Use: Casio calculators are generally designed for one-handed operation. However, due to their compact size and lightweight design, they can easily be operated with two hands when necessary.
+
+                Reliability: Casio calculators are known for their reliability and durability, making them a popular choice for everyday use.
+
               </p>
             </p>
           </Card>
@@ -41,14 +67,14 @@ export default function ProductDes() {
           <Card className="w-full">
             <h5 className="text-2xl font-bold tracking-tight flex  items-center justify-between gap-1 text-gray-900 dark:text-white">
               <div className="flex items-center">
-                <FaIndianRupeeSign /> <p>600</p>
+                <FaIndianRupeeSign /> <p>500</p>
               </div>
               <div className="flex items-center gap-4">
                 <AiOutlineShareAlt />
                 <AiOutlineHeart />
               </div>
             </h5>
-            <p className="text-gray-500 font-medium">Table Fan</p>
+            <p className="text-gray-500 font-medium">Casio Calculator 991FX model</p>
 
             <p className="text-gray-500 font-medium text-[10px]">
               
