@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div>
       <div >
-        <div className="navbar bg-white">
+        <div className="navbar bg-white fixed top-0 w-full z-50 ">
           <div className="w-[90%] mx-auto">
             <NavBar
               setLoading={setLoading}
@@ -48,7 +48,7 @@ export default function Home() {
             <Spinner aria-label="Extra large spinner example" size="xl" />
           </div>
         ) : (
-          <div className="flex mx-auto  w-[90%] flex-wrap justify-start gap-[2rem] my-3rem mt-[60px] mb-[100px]">
+          <div className="flex mx-auto  w-[90%] flex-wrap justify-start gap-[2rem] my-3rem  mb-[100px] mt-[120px]">
             {searchResults.length === 0
               ? products.map((product) => (
                   <ProdCard
