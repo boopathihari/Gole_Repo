@@ -54,7 +54,7 @@ export default function ProdCard({ productId, ProName, proAmount, imgsrc }) {
     //   </div>
     // </Card>
 
-    <div className="Card flex-auto w-[18rem]">
+    <div className="Card flex-auto w-[18rem] z-10">
       <a
         className="flex flex-col group bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-lg transition dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]"
         href="#"
