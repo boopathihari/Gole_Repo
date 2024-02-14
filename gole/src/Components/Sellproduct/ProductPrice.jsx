@@ -1,4 +1,6 @@
 import React from "react";
+import { MdCurrencyRupee } from "react-icons/md";
+
 
 export default function ProductPrice() {
   return (

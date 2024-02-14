@@ -1,18 +1,49 @@
 import React, { useEffect, useState } from "react";
 
-import { MdCurrencyRupee } from "react-icons/md";
 import { IoMdArrowBack } from "react-icons/io";
 import { AiFillCloseSquare } from "react-icons/ai";
 import ProductType from "./ProductType";
 import ProductDes from "./ProductDes";
-import ProductPrice from "./ProductDes";
+import ProductPrice from "./ProductPrice";
 import ContactDetails from "./ContactDetails";
 import ReviewDetails from "./ReviewDetails";
 import ProductImages from "./ProductImages";
 
 export default function SellProduct() {
- 
+  const [proDes,setproDes] = useState("");
+  const [Email,setEmail] = useState("");
+  const [selectedValue , setSelectedValue] = useState("");
+  const [Name,setName] = useState("");
+  const [isDisable ,setIsDisable] = useState(true);
+  const [selectedValueContact , setselectedValueContact] = useState("");
+  
+  const handleSelectChangeContact = (val) =>{
+    setselectedValueContact(val);
+  }
+  
+  const setNameHandler = (val) => {
+    setName(val);
+  }
 
+  const setproDesHandler = (val)=>{
+    setproDes(val);
+  }
+
+  const setEmailHandler = (val)=>{
+    setEmail(val);
+  }
+
+  const setSelectedValueHandler = (val) => {
+    setSelectedValue(val);
+  }
+
+  useEffect(() => {
+    const hasEmpty = proDes.trim() === '' || Email.trim() === '' || selectedValue.trim() === '' || selectedValueContact.trim() === '' || Name.trim() === '';
+    setIsDisable(hasEmpty);
+  },[proDes,Email,selectedValue,selectedValueContact,Name])
+  
+
+  
   return (
     <div>
       <div className="container w-[60%] mx-auto">
@@ -30,7 +61,7 @@ export default function SellProduct() {
         <ProductType/>
 
         {/* Product Details */}
-        <ProductDes/>
+        <ProductDes setEmailHandler={setEmailHandler} Email={Email}  setproDesHandler={setproDesHandler} proDes={proDes} setSelectedValueHandler={setSelectedValueHandler} selectedValue={selectedValue} />
 
         {/* Product Price  */}
         <ProductPrice/>
@@ -40,10 +71,10 @@ export default function SellProduct() {
         <ProductImages />
 
         {/* Contact Details */}
-        <ContactDetails/>
+        <ContactDetails handleSelectChangeContact={handleSelectChangeContact} selectedValueContact={selectedValueContact}/>
 
         {/* Review Details */}
-        <ReviewDetails/>
+        <ReviewDetails setNameHandler={setNameHandler} Name={Name}/>
        
 
         {/* Post Button */}
@@ -64,6 +95,7 @@ export default function SellProduct() {
                   <button
                     type="button"
                     class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    disabled={isDisable}
                   >
                     Post Now
                   </button>

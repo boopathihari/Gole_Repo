@@ -1,6 +1,11 @@
 import React from 'react'
 
-export default function ContactDetails() {
+export default function ContactDetails({handleSelectChangeContact, selectedValueContact}) {
+  const selectChangeHandler = (e) =>{
+    const val = e.target.value;
+    handleSelectChangeContact(val);
+  }
+
   return (
     <div>
       <div className="contact-details mt-[18px] shadow-sm rounded-2xl">
@@ -20,36 +25,19 @@ export default function ContactDetails() {
                 </label>
                 <div class="relative">
                   <select
+                    value={selectedValueContact}
+                    onChange={selectChangeHandler}
                     id="select-1"
-                    class="py-3 px-4 pe-16 block w-full border-red-500 rounded-lg text-sm focus:border-red-500 focus:ring-red-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                    class="py-3 px-4 pe-16 block w-full  rounded-lg text-sm  disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   >
-                    <option selected></option>
-                    <option>Tamil Nadu</option>
-                    <option>Kerala</option>
-                    <option>Delhi</option>
+                    <option value="" selected></option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Delhi">Delhi</option>
                   </select>
-                  <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-8">
-                    <svg
-                      class="flex-shrink-0 h-4 w-4 text-red-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" x2="12" y1="8" y2="12" />
-                      <line x1="12" x2="12.01" y1="16" y2="16" />
-                    </svg>
-                  </div>
+                  
                 </div>
-                <p class="text-sm text-red-600 mt-2">
-                  Please select a valid state.
-                </p>
+                
               </div>
             </div>
           </div>

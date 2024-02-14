@@ -1,6 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
+import Input from "./Input";
 
-export default function ProductPrice() {
+
+
+export default function ProductPrice({setEmailHandler,Email,setproDesHandler,proDes, setSelectedValueHandler, selectedValue}) {
+  // const [proDes,setproDes] = useState("");
+  const [isError,setIsError] = useState(true);
+  const [showIcon,setShowIcon] = useState(false);
+  const [isSuccess,setIsSuccess] = useState(false);
+  const [isErrorDes,setIsErrorDes] = useState(true);
+  const [showIconDes,setShowIconDes] = useState(false);
+  const [isSuccessDes,setIsSuccessDes] = useState(false);
+  
+
+  const Emailhandler = (e) =>{
+    const val = e.target.value;
+    setEmailHandler(val);
+
+      if(val.trim() !== ''){
+        setIsError(true);
+        setIsSuccess(true);
+      }
+
+      if(val.length > 10){
+        setShowIcon(true);
+      }else{
+        setShowIcon(false);
+      }
+    }
+
+    const blurHandler = () => {
+      if (Email.trim() !== '' && Email.length > 10) {
+        setIsError(true);
+        setIsSuccess(true);
+      }else{
+        setIsError(false);
+        setIsSuccess(false);
+      }
+    }
+
+
+    const Deshandler = (e) => {
+      const val = e.target.value;
+    	setproDesHandler(val);
+
+      if(val.trim() !== ''){
+        setIsErrorDes(true);
+        setIsSuccessDes(true);
+      }
+
+      if(val.length > 10){
+        setShowIconDes(true);
+      }else{
+        setShowIconDes(false);
+      }
+    }
+
+    const Desblurhandler = () => {
+      if(proDes.trim() !== '' && proDes.length > 10){
+        setIsErrorDes(true);
+        setIsSuccessDes(true);
+      }else{
+        setIsErrorDes(false);
+        setIsSuccessDes(false);
+      }
+    }
+
+    const handleSelectChange = (e) => {
+      const val = e.target.value;
+      setSelectedValueHandler(val);
+    }
+
   return (
     <div>
       <div className="product-details mt-[18px] shadow-sm rounded-2xl">
@@ -13,47 +83,7 @@ export default function ProductPrice() {
           <div className="p-4 md:p-5 flex gap-4 flex-col">
             <div className="flex gap-3">
               <div className="w-[50%] flex-1">
-                <label
-                  for="hs-validation-name-error"
-                  className="block text-sm font-medium mb-2 dark:text-white"
-                >
-                  Product Name*
-                </label>
-
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="hs-validation-name-error"
-                    name="hs-validation-name-error"
-                    className="py-3 px-4 block w-full border-red-500 rounded-lg text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                    required
-                    aria-describedby="hs-validation-name-error-helper"
-                  />
-                  <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
-                    <svg
-                      className="flex-shrink-0 h-4 w-4 text-red-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" x2="12" y1="8" y2="12" />
-                      <line x1="12" x2="12.01" y1="16" y2="16" />
-                    </svg>
-                  </div>
-                </div>
-                <p
-                  className="text-sm text-red-600 mt-2"
-                  id="hs-validation-name-error-helper"
-                >
-                  Please enter a Product Name.
-                </p>
+                <Input tag='input' label="Product Name*" type="email" ErrorMsg="A minimum length of 10 characters is required. Please edit the field." value={Email}  onchange={Emailhandler} onBlur={blurHandler} isError={isError} showIcon={showIcon} isSuccess={isSuccess}/>
               </div>
 
               <div className="w-[50%] flex-1">
@@ -66,72 +96,20 @@ export default function ProductPrice() {
                 <div class="relative">
                   <select
                     id="select-1"
-                    class="py-3 px-4 pe-16 block w-full border-red-500 rounded-lg text-sm focus:border-red-500 focus:ring-red-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                    value={selectedValue}
+                    onChange={handleSelectChange}
+                    class="py-3 px-4 pe-16 block w-full  rounded-lg text-sm  disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   >
-                    <option selected> </option>
-                    <option>New</option>
-                    <option>Used</option>
+                    <option value="" selected > </option>
+                    <option value="New">New</option>
+                    <option value="Used">Used</option>
                   </select>
-                  <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-8">
-                    <svg
-                      class="flex-shrink-0 h-4 w-4 text-red-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" x2="12" y1="8" y2="12" />
-                      <line x1="12" x2="12.01" y1="16" y2="16" />
-                    </svg>
-                  </div>
-                </div>
-                <p class="text-sm text-red-600 mt-2">
-                  Please select a valid state.
-                </p>
+              </div>
               </div>
             </div>
 
             <div className="w-[100%]">
-              <label
-                for="hs-validation-name-error"
-                class="block text-sm font-medium mb-2 dark:text-white"
-              >
-                Product Description*
-              </label>
-              <div class="relative">
-                <textarea
-                  id="hs-validation-name-error"
-                  class="py-3 px-4 block w-full border-red-500 rounded-lg text-sm focus:border-red-500 focus:ring-red-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  rows="3"
-                  placeholder="Enter the product description..."
-                  aria-describedby="hs-validation-name-error-helper"
-                  required
-                ></textarea>
-                <div class="absolute top-0 end-0 flex items-center pointer-events-none p-3">
-                  <svg
-                    class="flex-shrink-0 h-4 w-4 text-red-500"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" x2="12" y1="8" y2="12" />
-                    <line x1="12" x2="12.01" y1="16" y2="16" />
-                  </svg>
-                </div>
-              </div>
+              <Input tag='textarea' label="Product Description*" type="text" ErrorMsg="A minimum length of 10 characters is required. Please edit the field." value={proDes}  onchange={Deshandler} onBlur={Desblurhandler} isError={isErrorDes} showIcon={showIconDes} isSuccess={isSuccessDes}/>
             </div>
           </div>
         </div>
