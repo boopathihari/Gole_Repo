@@ -4,11 +4,13 @@ import NavBar from "../Components/Navbar/NavBar";
 import ProdCard from "../Components/ProductCard/ProdCard";
 import { useState, useEffect } from "react";
 
-export default function Home() {
+export default function Home({ addToWishlist, removeFromWishlist }) {
   const [products, setProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [Loading, setLoading] = useState(true);
+  const [temp, setTemp] = useState(false);
 
+  
   useEffect(() => {
     setLoading(true);
     // Fetch product data from your API
@@ -26,7 +28,7 @@ export default function Home() {
 
   return (
     <div>
-      <div >
+      <div>
         <div className="navbar bg-white fixed top-0 w-full z-50 ">
           <div className="w-[90%] mx-auto">
             <NavBar
@@ -52,20 +54,18 @@ export default function Home() {
             {searchResults.length === 0
               ? products.map((product) => (
                   <ProdCard
-                    productId={product.id}
-                    ProName={product.name}
-                    proAmount={product.amount}
-                    proDes={product.description}
-                    imgsrc={product.image}
+                    key={product.id}
+                    product={product}
+                    addToWishlist={addToWishlist}
+                    removeFromWishlist={removeFromWishlist}
                   />
                 ))
               : searchResults.map((product) => (
                   <ProdCard
-                    productId={product.id}
-                    ProName={product.name}
-                    proAmount={product.amount}
-                    proDes={product.description}
-                    imgsrc={product.image}
+                    key={product.id}
+                    product={product}
+                    addToWishlist={addToWishlist}
+                    removeFromWishlist={removeFromWishlist}
                   />
                 ))}
           </div>

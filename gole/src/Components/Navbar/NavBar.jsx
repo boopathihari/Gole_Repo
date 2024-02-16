@@ -50,10 +50,17 @@ export default function NavBar({
       </Navbar.Brand>
 
       <div className="flex md:order-2 gap-6 items-center">
+
+        <Link to="/wishlist">
+          <span className="text-gray-800 font-bold cursor-pointer">
+            Wishlist
+          </span>
+        </Link>
         <span className=" p-[10px] rounded-md font-bold text-gray-800 max-sm:hidden cursor-pointer underline">
           {" "}
           Login{" "}
         </span>
+
         <span className="customChat flex items-center justify-center border border-solid border-gray-400 p-[10px] rounded-md font-bold text-gray-800 max-sm:hidden cursor-pointer">
           {" "}
           <HiOutlineChatBubbleOvalLeft className="w-[1.7rem] h-[1.7rem] cursor-pointer sm:block" />
