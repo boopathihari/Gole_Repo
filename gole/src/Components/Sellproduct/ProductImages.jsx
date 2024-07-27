@@ -1,47 +1,51 @@
 import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
+export default function ProductImages({ files, setFile, setIsfileHandler }) {
+  const [message, setMessage] = useState("");
+  const [isFileSet, setIsFileSet] = useState(false);
 
-export default function ProductImages() {
-    const [files, setFile] = useState([]);
-    const [message, setMessage] = useState("");
-    const [isFileSet, setIsFileSet] = useState(false);
-  
-    useEffect(() => {
-      let imgLimt = 8;
-  
-      console.log(files.length);
-      if (files.length > imgLimt) {
-        console.log("Hello");
-        setMessage("Only 8 images can be upload");
-        setFile([]);
-        return;
+  useEffect(() => {
+    let imgLimt = 8;
+    setIsFileSet(false);
+
+    if (files.length > imgLimt) {
+      setMessage("Only 8 images can be upload");
+      setFile([]);
+      return;
+    }
+
+    console.log(files);
+    if (files.length > 0 && files.length <= imgLimt) {
+      setIsfileHandler(true);
+    } else {
+      setIsfileHandler(false);
+    }
+
+    setIsFileSet(true);
+  }, [files]);
+
+  const handleFile = (e) => {
+    setIsFileSet(false);
+    setMessage("");
+    let file = e.target.files;
+
+    for (let i = 0; i < file.length; i++) {
+      const fileType = file[i]["type"];
+      const validImgType = ["image/jpeg", "image/png"];
+
+      if (validImgType.includes(fileType)) {
+        console.log(file[i]);
+        setFile((prevFiles) => [...prevFiles, file[i]]);
+      } else {
+        setMessage("Only jpeg or png images accepted");
       }
-  
-      setIsFileSet(true);
-    }, [files]);
-  
-    const handleFile = (e) => {
-      setIsFileSet(false);
-      setMessage("");
-      let file = e.target.files;
-  
-      for (let i = 0; i < file.length; i++) {
-        const fileType = file[i]["type"];
-        const validImgType = ["image/jpeg", "image/png"];
-  
-        if (validImgType.includes(fileType)) {
-          console.log(file[i]);
-          setFile((prevFiles) => [...prevFiles, file[i]]);
-        } else {
-          setMessage("Only jpeg or png images accepted");
-        }
-      }
-    };
-  
-    const removeImage = (filename) => {
-      setFile(files.filter((file) => file.name != filename));
-    };
+    }
+  };
+
+  const removeImage = (filename) => {
+    setFile(files.filter((file) => file.name != filename));
+  };
 
   return (
     <div>

@@ -10,11 +10,10 @@ export default function Home({ addToWishlist, removeFromWishlist }) {
   const [Loading, setLoading] = useState(true);
   const [temp, setTemp] = useState(false);
 
-  
   useEffect(() => {
     setLoading(true);
     // Fetch product data from your API
-    fetch("http://localhost:8000/getProduct")
+    fetch("http://localhost:8000/api/getProducts")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -50,11 +49,11 @@ export default function Home({ addToWishlist, removeFromWishlist }) {
             <Spinner aria-label="Extra large spinner example" size="xl" />
           </div>
         ) : (
-          <div className="flex mx-auto  w-[90%] flex-wrap justify-start gap-[2rem] my-3rem  mb-[100px] mt-[120px]">
+          <div className="flex mx-auto  w-[83%] flex-wrap justify-start gap-[2rem] my-3rem  mb-[100px] mt-[120px]">
             {searchResults.length === 0
               ? products.map((product) => (
                   <ProdCard
-                    key={product.id}
+                    key={product._id}
                     product={product}
                     addToWishlist={addToWishlist}
                     removeFromWishlist={removeFromWishlist}

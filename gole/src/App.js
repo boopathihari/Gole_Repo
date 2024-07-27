@@ -7,18 +7,18 @@ import LoginPage from './Components/login/LoginPage';
 import Test from './Components/Test';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
-import productDescription from './Components/ProductDescription/ProductDes'; 
 import ProductDes from './Components/ProductDescription/ProductDes';
 import WishList from './Components/wishList/wishList';
+import DynamicInput from './Components/DynamicInput/Input';
 
 function App() {
   const initialWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
   const[wishlist , setWishlist] = useState(initialWishlist);
 
-  const addToWishlist = (product) =>{
-
+  const addToWishlist = (product,iswishListClicked) =>{
+    product.iswishListclicked = iswishListClicked;
+    console.log(product);
     const updatedWishlist = [...wishlist, product];
-
     setWishlist(updatedWishlist);
 
     // Update localStorage with the updated wishlist
@@ -41,8 +41,10 @@ function App() {
           <Route path="/" element={<Home addToWishlist={addToWishlist} removeFromWishlist={removeFromWishlist} />} />
           <Route path="/sellProduct" element={<SellProduct />} />
           <Route path="/wishlist" element={<WishList  removeFromWishlist={removeFromWishlist}/>}/>
-          <Route path="/ProductDetails" element={<ProductDes />} />
-          <Route path="/Product/:productID" element={<productDescription />} />
+          <Route path="/Product/:productID" element={<ProductDes />} />
+          <Route path="/dynamicInput" element={<DynamicInput />} />
+
+          {/* <Route path="/Product/:productID" element={<productDescription />} /> */}
         </Routes>
       </div>
      </Router>

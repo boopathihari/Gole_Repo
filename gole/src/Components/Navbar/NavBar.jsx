@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown, Navbar } from "flowbite-react";
 import src from "../profile.jpg";
 import Avatar from "./Avatar";
@@ -9,12 +9,23 @@ import { Button } from "flowbite-react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import logo from "../logo.jpg";
+import Auth from "../Auth/Auth";
 
 export default function NavBar({
   setSearchResults,
   searchResults,
   setLoading,
 }) {
+  const [user, setUser] = useState(localStorage.getItem("profile"));
+
+  useEffect(() => {
+    const storedProfile = localStorage.getItem("profile");
+    if (storedProfile) {
+      const parsedProfile = JSON.parse(storedProfile);
+      setUser(parsedProfile);
+    }
+  }, []);
+
   const handleSearch = (searchTerm) => {
     setLoading(true);
     if (searchTerm.trim() === "") {
@@ -38,19 +49,18 @@ export default function NavBar({
 
   return (
     <Navbar className="custom-nav py-[16px]" fluid rounded>
-      <Navbar.Brand className="w-[42px]" href="https://flowbite-react.com">
-        {/* <img
-          alt="Flowbite React Logo"
-          className="mr-3 h-6 sm:h-9"
-          src="/favicon.svg"
-        /> */}
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          <img src={logo} style={{ width: "66px", borderRadius: "50%" }}></img>
-        </span>
-      </Navbar.Brand>
+      <Link to="/">
+        <Navbar.Brand className="w-[42px] cursor-pointer">
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+            <img
+              src={logo}
+              style={{ width: "66px", borderRadius: "50%" }}
+            ></img>
+          </span>
+        </Navbar.Brand>
+      </Link>
 
       <div className="flex md:order-2 gap-6 items-center">
-
         <Link to="/wishlist">
           <span className="text-gray-800 font-bold cursor-pointer">
             Wishlist
@@ -58,7 +68,7 @@ export default function NavBar({
         </Link>
         <span className=" p-[10px] rounded-md font-bold text-gray-800 max-sm:hidden cursor-pointer underline">
           {" "}
-          Login{" "}
+          {user == null && <Auth />}
         </span>
 
         <span className="customChat flex items-center justify-center border border-solid border-gray-400 p-[10px] rounded-md font-bold text-gray-800 max-sm:hidden cursor-pointer">
@@ -67,19 +77,14 @@ export default function NavBar({
           &nbsp; Chat{" "}
         </span>
 
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={<Avatar alt="User settings" img={src} />}
-        >
-          <Dropdown.Header>
-            <span className="block text-sm">Bonnie Green</span>
-            <span className="block truncate text-sm font-medium">
-              name@flowbite.com
-            </span>
-          </Dropdown.Header>
-        </Dropdown>
-        <Navbar.Toggle />
+        {user != null ? (
+          <>
+            <img
+              src={user.picture}
+              alt="user profile"
+              className="w-12 h-12 rounded-full cursor-pointer"
+            />
+          
 
         <Link to="/sellProduct">
           <Button
@@ -89,6 +94,8 @@ export default function NavBar({
             <AiOutlinePlus className="w-[1.5rem] h-[1.5rem]" /> &nbsp; SELL
           </Button>
         </Link>
+        </>
+        ) : null}
       </div>
 
       <Navbar.Collapse className="customBtn">

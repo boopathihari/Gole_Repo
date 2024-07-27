@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdCurrencyRupee } from "react-icons/md";
 
+export default function ProductPrice({priceValue,setPriceValue}) {
 
-export default function ProductPrice() {
+  const handleChange = (event) => {
+    const rawValue = event.target.value.replace(/,/g, ""); // Remove existing commas
+    const newValue = parseFloat(rawValue);
+
+    if (!isNaN(newValue)) {
+      const formattedValue = newValue.toLocaleString("en-IN"); // Convert to rupee format
+      setPriceValue(formattedValue);
+    } else {
+      setPriceValue(""); // Clear the value if it's not a valid number
+    }
+  };
+
   return (
     <div>
       <div className="product-description mt-[18px] shadow-sm rounded-2xl">
@@ -27,6 +39,8 @@ export default function ProductPrice() {
                   name="hs-input-with-leading-and-trailing-icon"
                   className="py-3 px-4 ps-9 pe-16 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="0.00"
+                  value={priceValue}
+                  onChange={handleChange}
                 />
                 <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4">
                   <span className="text-gray-500">
