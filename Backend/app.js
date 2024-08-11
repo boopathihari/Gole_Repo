@@ -20,8 +20,8 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-const uri = "mongodb+srv://boopathihari2003:q4BgYMAsFSt78z4U@cluster0.3tso1lz.mongodb.net/?retryWrites=true&w=majority";
-
+const uri = "mongodb+srv://boopathihari2003:flSdvdpPdHkfFyWq@cluster0.3tso1lz.mongodb.net/";
+// mongodb+srv://boopathihari2003:q4BgYMAsFSt78z4U@cluster0.3tso1lz.mongodb.net/?retryWrites=true&w=majority
 const database = module.exports = () => {
     const connectionParams = {
       useNewUrlParser:true,
